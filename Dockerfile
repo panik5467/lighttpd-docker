@@ -9,12 +9,12 @@ RUN apk add --update --no-cache \
 	lighttpd-mod_auth \
   && rm -rf /var/cache/apk/*
 
-COPY etc/lighttpd/* /etc/lighttpd/
-COPY start.sh /usr/local/bin/
+COPY /lighttpd/* /etc/lighttpd/
+COPY /html /var/www/localhost/htdocs/html
 
 EXPOSE 80
 
 VOLUME /var/www/localhost/htdocs
 VOLUME /etc/lighttpd
 
-CMD ["start.sh"]
+CMD chmod a+w /dev/pts/0 && lighttpd -D -f /etc/lighttpd/lighttpd.conf
